@@ -14,7 +14,7 @@ R        = re.compile('[rR]')
 
 app = Flask(__name__)
 
-def subvowel(matchobj):
+def remove_vowel(matchobj):
     string = matchobj.group(0)
     len = string.__len__()
     if len == 2:
@@ -24,17 +24,20 @@ def subvowel(matchobj):
     else:
         return string[0] + '@' + string[2]
 
+def scrub_encoding(soundex, root):
+    soundex = re.sub('@', '', soundex, 0)
+    while soundex.__len__() < 4:
+        soundex += '0'
+    soundex = root + soundex[1:4]
+    return soundex
+
 def strip_doubles(name):
     return DBL_PATTERN.sub('\\1', name)
 
-@app.route('/encode/<name>')
-def soundex_encode(name):
-    #name = strip_doubles(name)
-    raw = name
-    root = name[0]
+def substitute(name):
     while True:
         if VOW_PATTERN.search(name):
-            name = VOW_PATTERN.sub(subvowel, name, 1)
+            name = VOW_PATTERN.sub(remove_vowel, name, 1)
         elif BFPV.search(name):
             name = BFPV.sub('1', name, 1)
         elif CGJKQSXZ.search(name):
@@ -49,12 +52,15 @@ def soundex_encode(name):
             name = R.sub('6', name, 1)
         else:
             break
-    name = strip_doubles(name)
-    name = re.sub('@', '', name, 0)
-    while name.__len__() < 4:
-        name += '0'
-    name = root + name[1:4]
-    return json.dumps({'raw': raw, 'encoded': name})
+    return name
+
+@app.route('/encode/<name>')
+def soundex_encode(name):
+    root = name[0]
+    soundex = substitute(name)
+    soundex = strip_doubles(soundex)
+    soundex = scrub_encoding(soundex, root)
+    return json.dumps({'raw': name, 'soundex': soundex})
 
 if __name__ == '__main__':
     #Bind to PORT if defined, otherwise default to 5000
