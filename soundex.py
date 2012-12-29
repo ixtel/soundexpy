@@ -3,13 +3,13 @@ import re
 from flask import Flask
 
 DBL_PATTERN = re.compile(r'(.)\1*')
-VOW_PATTERN = re.compile('.[aeiouyhw].?')
-BFPV     = re.compile('[bfpv]')
-CGJKQSXZ = re.compile('[cgjkqsxz]')
-DT       = re.compile('[dt]')
-L        = re.compile('[l]')
-MN       = re.compile('[mn]')
-R        = re.compile('[r]')
+VOW_PATTERN = re.compile('.[aAeEiIoOuUyYhHwW].?')
+BFPV     = re.compile('[bBfFpPvV]')
+CGJKQSXZ = re.compile('[cCgGjJkKqQsSxXzZ]')
+DT       = re.compile('[dDtT]')
+L        = re.compile('[lL]')
+MN       = re.compile('[mMnN]')
+R        = re.compile('[rR]')
 
 app = Flask(__name__)
 
@@ -18,7 +18,7 @@ def subvowel(matchobj):
     len = string.__len__()
     if len == 2:
         return string[0]
-    elif (string[1] == 'h') or (string[1] == 'w'):
+    elif re.compile('[hHwW]').match(string[1]):
         return string[0] + string[2]
     else:
         return string[0] + '@' + string[2]
@@ -28,7 +28,7 @@ def strip_doubles(name):
 
 @app.route('/encode/<name>')
 def soundex_encode(name):
-    name = strip_doubles(name)
+    #name = strip_doubles(name)
     root = name[0]
     while True:
         if VOW_PATTERN.search(name):
@@ -47,7 +47,6 @@ def soundex_encode(name):
             name = R.sub('6', name, 1)
         else:
             break
-
     name = strip_doubles(name)
     name = re.sub('@', '', name, 0)
     while name.__len__() < 4:
