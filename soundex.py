@@ -3,14 +3,14 @@ import re
 import json
 from flask import Flask
 
-DBL_PATTERN = re.compile(r'(.)\1*')
-VOW_PATTERN = re.compile('.[aAeEiIoOuUyYhHwW].?')
-BFPV     = re.compile('[bBfFpPvV]')
-CGJKQSXZ = re.compile('[cCgGjJkKqQsSxXzZ]')
-DT       = re.compile('[dDtT]')
-L        = re.compile('[lL]')
-MN       = re.compile('[mMnN]')
-R        = re.compile('[rR]')
+DOUBLE  = re.compile(r'(.)\1*')
+VOWEL   = re.compile('.[aAeEiIoOuUyYhHwW].?')
+ONE     = re.compile('[bBfFpPvV]')
+TWO     = re.compile('[cCgGjJkKqQsSxXzZ]')
+THREE   = re.compile('[dDtT]')
+FOUR    = re.compile('[lL]')
+FIVE    = re.compile('[mMnN]')
+SIX     = re.compile('[rR]')
 
 app = Flask(__name__)
 
@@ -32,24 +32,24 @@ def scrub_encoding(soundex, root):
     return soundex
 
 def strip_doubles(name):
-    return DBL_PATTERN.sub('\\1', name)
+    return DOUBLE.sub('\\1', name)
 
 def substitute(name):
     while True:
-        if VOW_PATTERN.search(name):
-            name = VOW_PATTERN.sub(remove_vowel, name, 1)
-        elif BFPV.search(name):
-            name = BFPV.sub('1', name, 1)
-        elif CGJKQSXZ.search(name):
-            name = CGJKQSXZ.sub('2', name, 1)
-        elif DT.search(name):
-            name = DT.sub('3', name, 1)
-        elif L.search(name):
-            name = L.sub('4', name, 1)
-        elif MN.search(name):
-            name = MN.sub('5', name, 1)
-        elif R.search(name):
-            name = R.sub('6', name, 1)
+        if VOWEL.search(name):
+            name = VOWEL.sub(remove_vowel, name, 1)
+        elif ONE.search(name):
+            name = ONE.sub('1', name, 1)
+        elif TWO.search(name):
+            name = TWO.sub('2', name, 1)
+        elif THREE.search(name):
+            name = THREE.sub('3', name, 1)
+        elif FOUR.search(name):
+            name = FOUR.sub('4', name, 1)
+        elif FIVE.search(name):
+            name = FIVE.sub('5', name, 1)
+        elif SIX.search(name):
+            name = SIX.sub('6', name, 1)
         else:
             break
     return name
