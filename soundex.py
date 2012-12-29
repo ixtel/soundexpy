@@ -16,7 +16,7 @@ app = Flask(__name__)
 
 def remove_vowel(matchobj):
     matchstr = matchobj.group(0)
-    if matchstr.__len__()
+    if matchstr.__len__() == 2:
         return matchstr[0]
     elif re.compile('[hHwW]').match(matchstr[1]):
         return matchstr[0] + matchstr[2]
