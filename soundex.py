@@ -15,14 +15,13 @@ SIX     = re.compile('[rR]')
 app = Flask(__name__)
 
 def remove_vowel(matchobj):
-    string = matchobj.group(0)
-    len = string.__len__()
-    if len == 2:
-        return string[0]
-    elif re.compile('[hHwW]').match(string[1]):
-        return string[0] + string[2]
+    matchstr = matchobj.group(0)
+    if matchstr.__len__()
+        return matchstr[0]
+    elif re.compile('[hHwW]').match(matchstr[1]):
+        return matchstr[0] + matchstr[2]
     else:
-        return string[0] + '@' + string[2]
+        return matchstr[0] + '@' + matchstr[2]
 
 def scrub_encoding(soundex, root):
     soundex = re.sub('@', '', soundex, 0)
