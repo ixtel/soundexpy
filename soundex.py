@@ -1,7 +1,7 @@
 import os
 import re
 import json
-from flask import Flask
+from flask import Flask, render_template
 
 DOUBLE  = re.compile(r'(.)\1*')
 VOWEL   = re.compile('.[AEIOUYHW].?')
@@ -59,6 +59,10 @@ def soundex_encode(name):
     soundex = strip_doubles(soundex)
     soundex = scrub_encoding(soundex, root)
     return json.dumps({'raw': name, 'soundex': soundex})
+
+@app.route('/')
+def spec():
+    return render_template('spec.html')
 
 if __name__ == '__main__':
     #Bind to PORT if defined, otherwise default to 5000
