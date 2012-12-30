@@ -4,13 +4,13 @@ import json
 from flask import Flask
 
 DOUBLE  = re.compile(r'(.)\1*')
-VOWEL   = re.compile('.[aAeEiIoOuUyYhHwW].?')
-ONE     = re.compile('[bBfFpPvV]')
-TWO     = re.compile('[cCgGjJkKqQsSxXzZ]')
-THREE   = re.compile('[dDtT]')
-FOUR    = re.compile('[lL]')
-FIVE    = re.compile('[mMnN]')
-SIX     = re.compile('[rR]')
+VOWEL   = re.compile('.[AEIOUYHW].?')
+ONE     = re.compile('[BFPV]')
+TWO     = re.compile('[CGJKQSXZ]')
+THREE   = re.compile('[DT]')
+FOUR    = re.compile('[L]')
+FIVE    = re.compile('[MN]')
+SIX     = re.compile('[R]')
 
 app = Flask(__name__)
 
@@ -53,6 +53,7 @@ def substitute(name):
 
 @app.route('/encode/<name>')
 def soundex_encode(name):
+    name = name.upper()
     root = name[0]
     soundex = substitute(name)
     soundex = strip_doubles(soundex)
