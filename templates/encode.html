@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <h3>Type a name into the textbox to recieve a JSON object <br>
-      containing the original text and the SoundEx encoding</h3>
+    <h3>Type a name into the textbox below:</h3>
     <form action="/encode", method="POST">
       Name: <input type="text" name="name"><br>
     </form>
+    {% if soundex %}
+    <br><b>Raw:</b> {{ raw }}
+    <br><b>Soundex:</b> {{ soundex }}
+    {% endif %}
   </body>
 </html>

@@ -51,16 +51,25 @@ def substitute(name):
             break
     return name
 
+def get_soundex(name):
+    root = name[0]
+    soundex = substitute(name)
+    soundex = strip_doubles(soundex)
+    soundex = scrub_encoding(soundex, root)
+    return soundex
+
 @app.route('/encode', methods=['GET', 'POST'])
 def soundex_encode():
     if request.method == 'POST':
         name = request.form['name'].upper()
-        root = name[0]
-        soundex = substitute(name)
-        soundex = strip_doubles(soundex)
-        soundex = scrub_encoding(soundex, root)
-        return json.dumps({'raw': name, 'soundex': soundex})
+        return render_template('encode.html', raw=name, soundex=get_soundex(name))
+#        return get_soundex(name)
     return render_template('encode.html')
+
+@app.route('/encode/<name>')
+def url_encode(name):
+    name = name.upper()
+    return json.dumps({'raw': name, 'soundex': get_soundex(name)})
 
 @app.route('/')
 def spec():

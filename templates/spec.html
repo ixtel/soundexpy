@@ -8,6 +8,21 @@
       <h4><i>Oren Leiman</i></h4>
     </tt>
     
-    <a href="/encode">encode</a>
+    Follow <a href="/encode">this link</a> for the encoding front end.<br>
+    Alternatively, curling the following URL:<br>
+    <blockquote><i>http://arcane-cove-8701/encode/[insert name here]</i></blockquote>
+    will return a JSON packet containing the original name and its SoundEx<br>
+    <h3>Example</h3>
+    <blockquote>
+      $ curl -i http://arcane-cove-8701/Konstantin<br>
+      >>HTTP/1.0 200 OK <br>
+      >>Content-Type: text/html; charset=utf-8<br>
+      >>Content-Length: 40<br>
+      >>Server: Werkzeug/0.8.3 Python/2.7.3<br>
+      >>Date: Mon, 31 Dec 2012 02:06:17 GMT<br>
+      >><br>
+      >>{"raw": "KONSTANTIN", "soundex": "K523"}<br>
+    </blockquote>
+    
   </body>
 </html>
