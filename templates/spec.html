@@ -15,11 +15,12 @@
     <h3>Example</h3>
     <blockquote>
       $ curl -i http://arcane-cove-8701/Konstantin<br>
-      >>HTTP/1.0 200 OK <br>
+      >>HTTP/1.1 200 OK<br>
       >>Content-Type: text/html; charset=utf-8<br>
+      >>Date: Mon, 31 Dec 2012 02:23:35 GMT<br>
+      >>Server: Werkzeug/0.8.3 Python/2.7.2<br>
       >>Content-Length: 40<br>
-      >>Server: Werkzeug/0.8.3 Python/2.7.3<br>
-      >>Date: Mon, 31 Dec 2012 02:06:17 GMT<br>
+      >>Connection: keep-alive<br>
       >><br>
       >>{"raw": "KONSTANTIN", "soundex": "K523"}<br>
     </blockquote>
