@@ -63,7 +63,6 @@ def soundex_encode():
     if request.method == 'POST':
         name = request.form['name'].upper()
         return render_template('encode.html', raw=name, soundex=get_soundex(name))
-#        return get_soundex(name)
     return render_template('encode.html')
 
 @app.route('/encode/<name>')
