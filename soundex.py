@@ -1,7 +1,7 @@
 import os
 import re
 import json
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
 
 DOUBLE  = re.compile(r'(.)\1*')
 VOWEL   = re.compile('.[AEIOUYHW].?')
@@ -68,7 +68,8 @@ def soundex_encode():
 @app.route('/encode/<name>')
 def url_encode(name):
     name = name.upper()
-    return json.dumps({'raw': name, 'soundex': get_soundex(name)})
+    response = json.dumps({'raw': name, 'soundex': get_soundex(name)})
+    return Response(response, mimetype='application/json')
 
 @app.route('/')
 def spec():
