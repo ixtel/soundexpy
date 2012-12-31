@@ -1,7 +1,7 @@
 import os
 import re
 import json
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 DOUBLE  = re.compile(r'(.)\1*')
 VOWEL   = re.compile('.[AEIOUYHW].?')
@@ -51,14 +51,16 @@ def substitute(name):
             break
     return name
 
-@app.route('/encode/<name>')
-def soundex_encode(name):
-    name = name.upper()
-    root = name[0]
-    soundex = substitute(name)
-    soundex = strip_doubles(soundex)
-    soundex = scrub_encoding(soundex, root)
-    return json.dumps({'raw': name, 'soundex': soundex})
+@app.route('/encode', methods=['GET', 'POST'])
+def soundex_encode():
+    if request.method == 'POST':
+        name = request.form['name'].upper()
+        root = name[0]
+        soundex = substitute(name)
+        soundex = strip_doubles(soundex)
+        soundex = scrub_encoding(soundex, root)
+        return json.dumps({'raw': name, 'soundex': soundex})
+    return render_template('encode.html')
 
 @app.route('/')
 def spec():
