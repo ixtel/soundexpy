@@ -15,7 +15,7 @@ Alternatively, curling the following URL:
 will return a JSON packet containing the original name and its SoundEx  
 ### Example
 
-> $ curl -i http://arcane-cove-8701/Konstantin  
+> $ curl -i http://arcane-cove-8701.herokuapp.com/Konstantin  
 > >HTTP/1.1 200 OK  
 > >Content-Type: text/html; charset=utf-8  
 > >Date: Mon, 31 Dec 2012 02:23:35 GMT  
