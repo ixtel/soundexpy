@@ -1,19 +1,21 @@
-[Permalink](http://arcane-cove-8701.herokuapp.com "Permalink to ")
+[Permalink](http://arcane-cove-8701.herokuapp.com "Permalink to")
 
-# 
-
+#SoundExPy 
  
 ### A web service, written in Python with Flask, which performs basic SoundEx encoding.
 
 #### *Oren Leiman* 
 
 Follow [this link][1] for the encoding front end.  
-Alternatively, curling the following URL:
-  
->http://arcane-cove-8701.herokuapp.com/encode/[insert name here]
 
-will return a JSON packet containing the original name and its SoundEx  
-### Example
+Alternatively, there is a small RESTful API available:   
+
+##HTTP Verbs
+
+###GET /encode/[name]
+>Used for retrieving the SoundEx encoding of 'name'.   
+
+#### Example
 
 > $ curl -i http://arcane-cove-8701.herokuapp.com/Konstantin  
 > >HTTP/1.1 200 OK  

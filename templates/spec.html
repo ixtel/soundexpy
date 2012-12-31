@@ -4,15 +4,23 @@
 
     <tt>
       <h1>SoundExPy</h1>
-      <h3>A web service, written in Python with Flask, which performs basic SoundEx encoding.</h3>
+      <h3>
+	A web service, written in Python with Flask, which performs
+	basic SoundEx encoding.
+      </h3>
       <h4><i>Oren Leiman</i></h4>
     </tt>
     
-    Follow <a href="/encode">this link</a> for the encoding front end.<br>
-    Alternatively, curling the following URL:<br>
-    <blockquote><i>http://arcane-cove-8701.herokuapp.com/encode/[insert name here]</i></blockquote>
-    will return a JSON packet containing the original name and its SoundEx<br>
-    <h3>Example</h3>
+    Follow <a href="/encode">this link</a> for the encoding front end.<br><br>
+
+    Alternatively, there is a small RESTful API available:<br>
+    <h2><u>HTTP Verbs</u></h2>
+    <h3>GET /encode/[name]</h3>
+    <blockquote>
+      Used for retrieving the SoundEx encoding of <i>name</i>.
+    </blockquote
+    
+    <h4>Example</h4>
     <blockquote>
       $ curl -i http://arcane-cove-8701.herokuapp.com/Konstantin<br>
       >>HTTP/1.1 200 OK<br>
