@@ -19,7 +19,7 @@ Alternatively, there is a small RESTful API available:
 
 > $ curl -i http://arcane-cove-8701.herokuapp.com/Konstantin  
 > >HTTP/1.1 200 OK  
-> >Content-Type: text/html; charset=utf-8  
+> >Content-Type: application/json
 > >Date: Mon, 31 Dec 2012 02:23:35 GMT  
 > >Server: Werkzeug/0.8.3 Python/2.7.2  
 > >Content-Length: 40  
