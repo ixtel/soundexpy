@@ -3,26 +3,25 @@ import re
 import json
 from flask import Flask, render_template, request, Response
 
-DOUBLE  = re.compile(r'^(.)(.*)(.)\g<3>+(.*)$')
-VOWEL   = re.compile('^(.)(.*)([AEIOUYHW])(.*)$')
-ONE     = re.compile('^(.)(.*)([BFPV])(.*)$')
-TWO     = re.compile('^(.)(.*)([CGJKQSXZ])(.*)$')
-THREE   = re.compile('^(.)(.*)([DT])(.*)$')
-FOUR    = re.compile('^(.)(.*)([L])(.*)$')
-FIVE    = re.compile('^(.)(.*)([MN])(.*)$')
-SIX     = re.compile('^(.)(.*)([R])(.*)$')
-DBL1    = re.compile('^(.)(.*)(11)(.*)$')
-DBL2    = re.compile('^(.)(.*)(22)(.*)$')
-DBL3    = re.compile('^(.)(.*)(33)(.*)$')
-DBL4    = re.compile('^(.)(.*)(44)(.*)$')
-DBL5    = re.compile('^(.)(.*)(55)(.*)$')
-DBL6    = re.compile('^(.)(.*)(66)(.*)$')
-DBL1F   = re.compile('^([BFPV])(1)(.*)$')
-DBL2F   = re.compile('^([CGJKQSXZ])(2)(.*)$')
-DBL3F   = re.compile('^([DT])(3)(.*)$')
-DBL4F   = re.compile('^([L])(4)(.*)$')
-DBL5F   = re.compile('^([MN])(5)(.*)$')
-DBL6F   = re.compile('^([R])(6)(.*)$')
+VOWEL   = re.compile('(.)[AEIOUYHW](.?)')
+ONE     = re.compile('(.)[BFPV]')
+TWO     = re.compile('(.)[CGJKQSXZ]')
+THREE   = re.compile('(.)[DT]')
+FOUR    = re.compile('(.)[L]')
+FIVE    = re.compile('(.)[MN]')
+SIX     = re.compile('(.)[R]')
+DBL1    = re.compile('11+')
+DBL2    = re.compile('22+')
+DBL3    = re.compile('33+')
+DBL4    = re.compile('44+')
+DBL5    = re.compile('55+')
+DBL6    = re.compile('66+')
+DBL1F   = re.compile('^([BFPV])1+(.*)$')
+DBL2F   = re.compile('^([CGJKQSXZ])2+(.*)$')
+DBL3F   = re.compile('^([DT])3+(.*)$')
+DBL4F   = re.compile('^([L])4+(.*)$')
+DBL5F   = re.compile('^([MN])5+(.*)$')
+DBL6F   = re.compile('^([R])6+(.*)$')
 LEN1    = re.compile('^(.)$')
 LEN2    = re.compile('^(..)$')
 LEN3    = re.compile('^(...)$')
@@ -31,62 +30,41 @@ LENGT4  = re.compile('^(....).+$')
 app = Flask(__name__)
 
 def encode(name):
+
     while True:
-        if ONE.match(name):
-            name = ONE.sub('\g<1>\g<2>1\g<4>', name, 1)
-        elif TWO.match(name):
-            name = TWO.sub('\g<1>\g<2>2\g<4>', name, 1)
-        elif THREE.match(name):
-            name = THREE.sub('\g<1>\g<2>3\g<4>', name, 1)
-        elif FOUR.match(name):
-            name = FOUR.sub('\g<1>\g<2>4\g<4>', name, 1)
-        elif FIVE.match(name):
-            name = FIVE.sub('\g<1>\g<2>5\g<4>', name, 1)
-        elif SIX.match(name):
-            name = SIX.sub('\g<1>\g<2>6\g<4>', name, 1)
-        elif DOUBLE.match(name):
-            name = DOUBLE.sub('\g<1>\g<2>\g<3>\g<4>', name, 1)
-        elif DBL1.match(name):
-            name = DBL1.sub('\g<1>\g<2>1\g<4>', name, 1)
-        elif DBL2.match(name):
-            name = DBL2.sub('\g<1>\g<2>2\g<4>', name, 1)
-        elif DBL3.match(name):
-            name = DBL3.sub('\g<1>\g<2>3\g<4>', name, 1)
-        elif DBL4.match(name):
-            name = DBL4.sub('\g<1>\g<2>4\g<4>', name, 1)
-        elif DBL5.match(name):
-            name = DBL5.sub('\g<1>\g<2>5\g<4>', name, 1)
-        elif DBL6.match(name):
-            name = DBL6.sub('\g<1>\g<2>6\g<4>', name, 1)
-        elif DBL1F.match(name):
-            name = DBL1F.sub('\g<1>\g<3>', name, 1)
-        elif DBL2F.match(name):
-            name = DBL2F.sub('\g<1>\g<3>', name, 1)
-        elif DBL3F.match(name):
-            name = DBL3F.sub('\g<1>\g<3>', name, 1)
-        elif DBL4F.match(name):
-            name = DBL4F.sub('\g<1>\g<3>', name, 1)
-        elif DBL5F.match(name):
-            name = DBL5F.sub('\g<1>\g<3>', name, 1)
-        elif DBL6F.match(name):
-            name = DBL6F.sub('\g<1>\g<3>', name, 1)
-        else:
+        temp = name
+        name = ONE.sub('\g<1>1', name)
+        name = TWO.sub('\g<1>2', name)
+        name = THREE.sub('\g<1>3', name)
+        name = FOUR.sub('\g<1>4', name)
+        name = FIVE.sub('\g<1>5', name)
+        name = SIX.sub('\g<1>6', name)
+        name = DBL1.sub('1', name)
+        name = DBL2.sub('2', name)
+        name = DBL3.sub('3', name)
+        name = DBL4.sub('4', name)
+        name = DBL5.sub('5', name)
+        name = DBL6.sub('6', name)
+        name = DBL1F.sub('\g<1>\g<2>', name)
+        name = DBL2F.sub('\g<1>\g<2>', name)
+        name = DBL3F.sub('\g<1>\g<2>', name)
+        name = DBL4F.sub('\g<1>\g<2>', name)
+        name = DBL5F.sub('\g<1>\g<2>', name)
+        name = DBL6F.sub('\g<1>\g<2>', name)
+        if name == temp:
             break
 
     while True:
-        if VOWEL.match(name):
-            name = VOWEL.sub('\g<1>\g<2>\g<4>', name, 1)
-        elif LEN1.match(name):
-            name = LEN1.sub('\g<1>000', name, 1)
-        elif LEN2.match(name):
-            name = LEN2.sub('\g<1>00', name, 1)
-        elif LEN3.match(name):
-            name = LEN3.sub('\g<1>0', name, 1)
-        elif LENGT4.match(name):
-            name = LENGT4.sub('\g<1>', name, 1)
-        else:
+        temp = name
+        name = VOWEL.sub('\g<1>\g<2>', name)
+        if name == temp:
             break
 
+    name = LEN1.sub('\g<1>000', name)
+    name = LEN2.sub('\g<1>00', name)
+    name = LEN3.sub('\g<1>0', name)
+    name = LENGT4.sub('\g<1>', name)
+    
     return name
 
 @app.route('/encode', methods=['GET', 'POST'])
