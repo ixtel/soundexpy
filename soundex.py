@@ -3,14 +3,14 @@ import re
 import json
 from flask import Flask, render_template, request, Response
 
-DOUBLE  = re.compile(r'(.)\1*')
-VOWEL   = re.compile('.[AEIOUYHW].?')
-ONE     = re.compile('[BFPV]')
-TWO     = re.compile('[CGJKQSXZ]')
-THREE   = re.compile('[DT]')
-FOUR    = re.compile('[L]')
-FIVE    = re.compile('[MN]')
-SIX     = re.compile('[R]')
+DOUBLE  = re.compile('(.*)(.)(\2)+(.*)')
+VOWEL   = re.compile('(.)(.*)([AEIOUYHW])(.*)')
+ONE     = re.compile('^(.)(.*)([BFPV])(.*)$')
+TWO     = re.compile('^(.)(.*)([CGJKQSXZ])(.*)$')
+THREE   = re.compile('^(.)(.*)([DT])(.*)$')
+FOUR    = re.compile('^(.)(.*)([L])(.*)$')
+FIVE    = re.compile('^(.)(.*)([MN])(.*)$')
+SIX     = re.compile('^(.)(.*)([R])(.*)$')
 
 app = Flask(__name__)
 
@@ -33,20 +33,22 @@ def strip_doubles(name):
 
 def substitute(name):
     while True:
-        if VOWEL.search(name):
-            name = VOWEL.sub(remove_vowel, name, 1)
-        elif ONE.search(name):
-            name = ONE.sub('1', name, 1)
+        if ONE.search(name):
+            name = ONE.sub('\g<1>\g<2>1\g<4>', name, 1)
         elif TWO.search(name):
-            name = TWO.sub('2', name, 1)
+            name = TWO.sub('\g<1>\g<2>2\g<4>', name, 1)
         elif THREE.search(name):
-            name = THREE.sub('3', name, 1)
+            name = THREE.sub('\g<1>\g<2>3\g<4>', name, 1)
         elif FOUR.search(name):
-            name = FOUR.sub('4', name, 1)
+            name = FOUR.sub('\g<1>\g<2>4\g<4>', name, 1)
         elif FIVE.search(name):
-            name = FIVE.sub('5', name, 1)
+            name = FIVE.sub('\g<1>\g<2>5\g<4>', name, 1)
         elif SIX.search(name):
-            name = SIX.sub('6', name, 1)
+            name = SIX.sub('\g<1>\g<2>6\g<4>', name, 1)
+        elif DOUBLE.search(name):
+            name = DOUBLE.sub('\g<1>\g<2>\g<4>', name, 1)
+        elif VOWEL.search(name):
+            name = VOWEL.sub(remove_vowel, name, 1)
         else:
             break
     return name
