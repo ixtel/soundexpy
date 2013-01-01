@@ -30,8 +30,8 @@ LENGT4  = re.compile('^(....).+$')
 app = Flask(__name__)
 
 def encode(name):
-
-    while True:
+    temp = ''
+    while temp != name:
         temp = name
         name = ONE.sub('\g<1>1', name)
         name = TWO.sub('\g<1>2', name)
@@ -39,26 +39,24 @@ def encode(name):
         name = FOUR.sub('\g<1>4', name)
         name = FIVE.sub('\g<1>5', name)
         name = SIX.sub('\g<1>6', name)
-        name = DBL1.sub('1', name)
-        name = DBL2.sub('2', name)
-        name = DBL3.sub('3', name)
-        name = DBL4.sub('4', name)
-        name = DBL5.sub('5', name)
-        name = DBL6.sub('6', name)
-        name = DBL1F.sub('\g<1>\g<2>', name)
-        name = DBL2F.sub('\g<1>\g<2>', name)
-        name = DBL3F.sub('\g<1>\g<2>', name)
-        name = DBL4F.sub('\g<1>\g<2>', name)
-        name = DBL5F.sub('\g<1>\g<2>', name)
-        name = DBL6F.sub('\g<1>\g<2>', name)
-        if name == temp:
-            break
 
-    while True:
+    name = DBL1.sub('1', name)
+    name = DBL2.sub('2', name)
+    name = DBL3.sub('3', name)
+    name = DBL4.sub('4', name)
+    name = DBL5.sub('5', name)
+    name = DBL6.sub('6', name)
+    name = DBL1F.sub('\g<1>\g<2>', name)
+    name = DBL2F.sub('\g<1>\g<2>', name)
+    name = DBL3F.sub('\g<1>\g<2>', name)
+    name = DBL4F.sub('\g<1>\g<2>', name)
+    name = DBL5F.sub('\g<1>\g<2>', name)
+    name = DBL6F.sub('\g<1>\g<2>', name)
+    
+    temp = ''
+    while temp != name:
         temp = name
         name = VOWEL.sub('\g<1>\g<2>', name)
-        if name == temp:
-            break
 
     name = LEN1.sub('\g<1>000', name)
     name = LEN2.sub('\g<1>00', name)
