@@ -3,6 +3,7 @@
 #SoundExPy 
  
 ### A web service, written in Python with Flask, which performs basic SoundEx encoding.
+### Please note that this is an attempt to implement SoundEx as a Markov Algorithm.
 
 #### *Oren Leiman* 
 
